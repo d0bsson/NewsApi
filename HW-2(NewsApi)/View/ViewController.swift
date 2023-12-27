@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     private var articles: [Articles] = []
     
     lazy var table: UITableView = {
-        $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        $0.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.reuseId)
         $0.dataSource = self
         return $0
     }(UITableView(frame: view.frame, style: .insetGrouped))
@@ -36,9 +36,10 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = articles[indexPath.row].title
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.reuseId, for: indexPath) as? CustomTableViewCell {
+            cell.configureCell(data: articles[indexPath.row])
+        }
+        return UITableViewCell()
     }
     
     
