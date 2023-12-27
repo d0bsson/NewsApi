@@ -13,6 +13,7 @@
 		D7DADD0B2B376D29006D9629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DADD0A2B376D29006D9629 /* Assets.xcassets */; };
 		D7DADD0E2B376D29006D9629 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7DADD0C2B376D29006D9629 /* LaunchScreen.storyboard */; };
 		D7DADD172B3772DA006D9629 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DADD162B3772DA006D9629 /* News.swift */; };
+		D7DADD192B3CA53D006D9629 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DADD182B3CA53D006D9629 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D7DADD0D2B376D29006D9629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7DADD0F2B376D29006D9629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7DADD162B3772DA006D9629 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		D7DADD182B3CA53D006D9629 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				D7DADD0A2B376D29006D9629 /* Assets.xcassets */,
 				D7DADD0C2B376D29006D9629 /* LaunchScreen.storyboard */,
 				D7DADD0F2B376D29006D9629 /* Info.plist */,
+				D7DADD182B3CA53D006D9629 /* NetworkManager.swift */,
 			);
 			path = "HW-2(NewsApi)";
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			files = (
 				D7DADD062B376D27006D9629 /* ViewController.swift in Sources */,
 				D7DADD022B376D27006D9629 /* AppDelegate.swift in Sources */,
+				D7DADD192B3CA53D006D9629 /* NetworkManager.swift in Sources */,
 				D7DADD172B3772DA006D9629 /* News.swift in Sources */,
 				D7DADD042B376D27006D9629 /* SceneDelegate.swift in Sources */,
 			);

@@ -8,31 +8,36 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let service = Service()
+    private var articles: [Articles] = []
     
     lazy var table: UITableView = {
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         $0.dataSource = self
         return $0
     }(UITableView(frame: view.frame, style: .insetGrouped))
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(table)
-        service.getNews(q: "sega", count: 10)
+        NetworkManager.shared.getNews(q: "Russia", count: 10) { articles in
+            self.articles = articles
+            print(articles)
+            
+            DispatchQueue.main.async {
+                self.table.reloadData()
+                }
+            }
+        }
     }
-
-
-}
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = String(indexPath.debugDescription)
+        cell.textLabel?.text = articles[indexPath.row].title
         return cell
     }
     
