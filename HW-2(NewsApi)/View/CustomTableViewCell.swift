@@ -14,9 +14,8 @@ class CustomTableViewCell: UITableViewCell {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 15
         
-        $0.addSubview(image)
         $0.addSubview(titleLabel)
-        $0.addSubview(discriptionLabel)
+        $0.addSubview(image)
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIView())
@@ -31,27 +30,22 @@ class CustomTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         $0.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        $0.textColor = .black
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        return $0
-    }(UILabel())
-    
-    private lazy var discriptionLabel: UILabel = {
-        $0.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        $0.textColor = .black
-        $0.numberOfLines = 0
+        $0.textColor = .white
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
     func configureCell(data: Articles) {
-        titleLabel.text = data.content
+        self.addSubview(cellView)
+        titleLabel.text = data.title
+        
         DispatchQueue.global().async {
             guard let stringUrl = data.urlToImage else { return }
             guard let imageUrl = URL(string: stringUrl) else { return }
             guard let imageData = try? Data(contentsOf: imageUrl) else { return }
             DispatchQueue.main.async {
                 self.image.image = UIImage(data: imageData)
+                
                 print("image data is ok")
             }
         }
@@ -62,20 +56,14 @@ class CustomTableViewCell: UITableViewCell {
             cellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            image.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 18),
-            image.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 18),
-            image.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -18),
-            image.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -18),
+            image.topAnchor.constraint(equalTo: cellView.topAnchor),
+            image.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
+            image.bottomAnchor.constraint(equalTo: cellView.bottomAnchor),
             
-            titleLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 18),
-            titleLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -18),
-            titleLabel.bottomAnchor.constraint(equalTo: discriptionLabel.topAnchor, constant: -18),
-            
-            discriptionLabel.bottomAnchor.constraint(equalTo: cellView.topAnchor, constant: -18),
-            discriptionLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 18),
-            discriptionLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -18),        
+            titleLabel.leadingAnchor.constraint(equalTo: image.leadingAnchor, constant: 50),
+            titleLabel.bottomAnchor.constraint(equalTo: image.bottomAnchor, constant: -18),
+            titleLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
-    
-    
 }
