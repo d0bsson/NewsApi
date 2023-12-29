@@ -56,21 +56,17 @@ class CustomTableViewCell: UITableViewCell {
         self.addSubview(cellView)
         titleLabel.text = data.title
         
-        if let stringUrl = data.urlToImage,
-           let imageUrl = URL(string: stringUrl){
-            self.image.loadImage(url: imageUrl, AI: activityIndicator)
+        if let stringUrl = data.urlToImage {
+            loadImage(from: stringUrl)
         }
+           
         
-        let hAnchor = image.heightAnchor.constraint(equalToConstant: 200)
-        hAnchor.priority = .defaultHigh
-        hAnchor.isActive = true
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             cellView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             cellView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cellView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            hAnchor,
             image.topAnchor.constraint(equalTo: cellView.topAnchor),
             image.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             image.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
@@ -85,16 +81,34 @@ class CustomTableViewCell: UITableViewCell {
             
         ])
     }
-}
-
-extension UIImageView{
-    func loadImage(url: URL, AI: UIActivityIndicatorView) {
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else { return }
-            DispatchQueue.main.async {
-                self.image = UIImage(data: imageData)
-                AI.stopAnimating()
-            }
+    
+    private func loadImage(from url: String) {
+        guard let imageURL = URL(string: url) else { return }
+        self.activityIndicator.stopAnimating()
+        if let cachedImage = getCachedImage(from: imageURL) {
+            self.image.image = cachedImage
+            return
+        }
+        ImageManager.shared.loadImage(url: imageURL) { data, response in
+            self.image.image = UIImage(data: data)
+            self.saveDataToCache(with: data, and: response)
+            self.activityIndicator.stopAnimating()
         }
     }
+    
+    private func saveDataToCache(with data: Data, and response: URLResponse) {
+        guard let url = response.url else { return }
+        let request = URLRequest(url: url)
+        let cachedResponse = CachedURLResponse(response: response, data: data)
+        URLCache.shared.storeCachedResponse(cachedResponse, for: request)
+    }
+    
+    private func getCachedImage(from url: URL) -> UIImage? {
+        let request = URLRequest(url: url)
+        if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
+            return UIImage(data: cachedResponse.data)
+        }
+        return nil
+    }
 }
+
