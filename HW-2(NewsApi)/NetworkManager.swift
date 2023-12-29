@@ -21,7 +21,7 @@ class NetworkManager {
         URLQueryItem(name: "q", value: q),
         URLQueryItem(name: "pageSize", value: "\(count)"),
         URLQueryItem(name: "apiKey", value: "d522f4ce80244e79b06425239a10ce0c"),
-        URLQueryItem(name: "language", value: "ru")
+        URLQueryItem(name: "language", value: "en")
         ]
         
         guard let url = urlComponents.url else { return }

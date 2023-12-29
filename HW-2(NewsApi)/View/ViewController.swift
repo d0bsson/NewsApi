@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(table)
-        NetworkManager.shared.getNews(q: "USA", count: 10) { articles in
+        NetworkManager.shared.getNews(q: "russia", count: 10) { articles in
             self.articles = articles
             print(articles)
             
